@@ -1,0 +1,12 @@
+.row{
+    margin-top: 20px;
+}
+#table-parent {
+    padding-top: 50px;     /* <---- Padding that moved down the hole Table */
+}
+.error-message {
+    background-color: #fce4e4;
+    border: 1px solid #fcc2c3;
+    float: left;
+    padding: 20px 30px;
+  }
