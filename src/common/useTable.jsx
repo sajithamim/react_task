@@ -4,7 +4,7 @@ import { AiTwotoneDelete } from "react-icons/ai";
 
 export default function useTable(headCells, list) {
   const accessToken = sessionStorage.getItem("accessToken");
-  
+
   const TblContainer = (props) => (
     <table className="table table-striped table-hover"></table>
   );
@@ -33,26 +33,17 @@ export default function useTable(headCells, list) {
                   {item.category == 1 ? "Primary" : "Secondary"}
                 </td>
                 <td scope="col">
-                  <button
-                    type="button"
-                    data-toggle="modal"
-                    id="actionBtn"
-                  >
+                  <div>
                     <BsPencil
-                      style={{ fontSize: 20, marginTop:"3px" }}
+                      style={{}}
+                      className="actionBtn"
                       onClick={() => handleShow(item.id)}
                     />{" "}
-                  </button>
-                  <button
-                    type="button"
-                    data-toggle="modal"
-                    id="actionBtn"
-                  >
-                    <AiTwotoneDelete
-                      style={{ fontSize: 20, marginTop:"3px" }}
-                      onClick={() => handleDelete(item.id)}
-                    />{" "}
-                  </button>
+                  <AiTwotoneDelete
+                    style={{ fontSize: 20, marginTop: "3px" }}
+                    onClick={() => handleDelete(item.id)}
+                  />{" "}
+                  </div>
                 </td>
               </tr>
             </>
@@ -76,7 +67,9 @@ export default function useTable(headCells, list) {
                 </div>
               </td>
             </tr>
-          ) : ""}
+          ) : (
+            ""
+          )}
         </>
       )}
     </tbody>

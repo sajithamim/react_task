@@ -3,7 +3,7 @@ import { getDatabase } from "firebase/database";
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDguBICjJR5-8LB6t8fhX6mZEsP2Gbr9Xc",
+    apiKey: "AIzaSyAgAQCQ8TJvOisttP3PfvczC2INz1SMiAU",
     authDomain: "react-task-798d9.firebaseapp.com",
     projectId: "react-task-798d9",
     storageBucket: "react-task-798d9.appspot.com",
