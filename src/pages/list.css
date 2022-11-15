@@ -9,4 +9,18 @@
     border: 1px solid #fcc2c3;
     float: left;
     padding: 20px 30px;
-  }
+}
+#category{
+    width: 255px;
+    height: 39px;
+    border-radius: 5px;
+}
+#actionBtn{
+    width: 50px;
+    height: 40px;
+    padding: 10px;
+}
+.tblRow{
+    align-items: center;
+    justify-content: center;
+}

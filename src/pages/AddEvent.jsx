@@ -32,9 +32,9 @@ function AddEvent({handleClose, values,show, handleInputChange, handleSubmit,opt
               value={values.category}
               onChange={handleInputChange}
             >
-              <option selected>Choose a category</option>
+              <option>Choose a category</option>
               {options.map((item) => (
-                <option value={item.id}>{item.name}</option>
+                <option key={item.name} value={item.id}>{item.name}</option>
               ))}
             </Form.Select>
           </Form.Group>

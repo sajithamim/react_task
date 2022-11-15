@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { BsFillPencilFill } from "react-icons/bs";
+import { BsPencil } from "react-icons/bs";
 import { AiTwotoneDelete } from "react-icons/ai";
 
 export default function useTable(headCells, list) {
+  const accessToken = sessionStorage.getItem("accessToken");
+  
   const TblContainer = (props) => (
     <table className="table table-striped table-hover"></table>
   );
@@ -11,7 +13,7 @@ export default function useTable(headCells, list) {
     <thead>
       <tr>
         {headCells.map((item) => (
-          <th>{item.label}</th>
+          <th key={item.id}>{item.label}</th>
         ))}
       </tr>
     </thead>
@@ -27,21 +29,30 @@ export default function useTable(headCells, list) {
               <tr key={item.id}>
                 <td scope="col">{serialNo}</td>
                 <td scope="col">{item.name}</td>
-                <td scope="col"></td>
                 <td scope="col">
                   {item.category == 1 ? "Primary" : "Secondary"}
                 </td>
                 <td scope="col">
-                  <BsFillPencilFill
-                    style={{ fontSize: 20 }}
-                    color="disabled"
-                    onClick={() => handleShow(item.id)}
-                  />{" "}
-                  <AiTwotoneDelete
-                    style={{ fontSize: 20 }}
-                    color="disabled"
-                    onClick={() => handleDelete(item.id)}
-                  />{" "}
+                  <button
+                    type="button"
+                    data-toggle="modal"
+                    id="actionBtn"
+                  >
+                    <BsPencil
+                      style={{ fontSize: 20, marginTop:"3px" }}
+                      onClick={() => handleShow(item.id)}
+                    />{" "}
+                  </button>
+                  <button
+                    type="button"
+                    data-toggle="modal"
+                    id="actionBtn"
+                  >
+                    <AiTwotoneDelete
+                      style={{ fontSize: 20, marginTop:"3px" }}
+                      onClick={() => handleDelete(item.id)}
+                    />{" "}
+                  </button>
                 </td>
               </tr>
             </>
@@ -49,9 +60,23 @@ export default function useTable(headCells, list) {
         })
       ) : (
         <>
-          <tr><td colspan={5}><div className="d-flex justify-content-center align-items-center p-5">
-            <h1>No Data Found!</h1>
-          </div></td></tr>
+          {list && list.length === 0 && accessToken ? (
+            <tr>
+              <td colSpan={5}>
+                <div className="d-flex justify-content-center align-items-center p-5">
+                  <h3>Loading!</h3>
+                </div>
+              </td>
+            </tr>
+          ) : list && list.length === 0 && accessToken === null ? (
+            <tr>
+              <td colSpan={5}>
+                <div className="d-flex justify-content-center align-items-center p-5">
+                  <h1>No Data Found!</h1>
+                </div>
+              </td>
+            </tr>
+          ) : ""}
         </>
       )}
     </tbody>

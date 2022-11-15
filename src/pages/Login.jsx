@@ -18,7 +18,7 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log("user", user)
+        sessionStorage.setItem("accessToken", user.accessToken);
         navigate("/eventlist");
       })
       .catch((error) => {
@@ -53,6 +53,11 @@ const Login = () => {
           <button onClick={onSignIn} className="btn btn-primary">
             Submit
           </button>
+        </div>
+         <div className="d-grid gap-2 mt-3">
+          <a href="/eventlist" className="link-primary">
+            Click here to Add Events without a Login
+          </a>
         </div>
       </div>
     </div>
