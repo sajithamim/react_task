@@ -1,7 +1,27 @@
-import React from "react";
-import { categories } from "../data"; 
+import React, { useState, useEffect } from "react";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  onSnapshot,
+} from "firebase/firestore";
+import { app } from "../pages/fire";
 
 const Events = () => {
+  const firestore = getFirestore(app);
+  const [eventList, setEventList] = useState([]);
+  useEffect(() => {
+    const getEventsList = async () => {
+      onSnapshot(collection(firestore, "events"), (snapshot) => {
+        let list = [];
+        snapshot.docs.forEach((doc) => {
+          list.push({id: doc.id, ...doc.data()})
+        })
+        setEventList(list)
+      })
+    };
+    getEventsList();
+  }, []);
   return (
     <section className="section-name padding-y-sm">
       <div className="container">
@@ -12,7 +32,7 @@ const Events = () => {
           <h3 className="section-title">Popular products</h3>
         </header>
         <div className="row">
-          {categories.map((result) => {
+          {eventList.map((result) => {
             return (
               <div className="col-md-3">
                 <div href="#" className="card card-product-grid">
@@ -22,9 +42,9 @@ const Events = () => {
                   </a>
                   <figcaption className="info-wrap">
                     <a href="#" className="title">
-                      {result.title}
+                      {result.eventName}
                     </a>
-                    <div className="price mt-1">{result.title}</div>
+                    <div className="price mt-1">{result.description}</div>
                   </figcaption>
                 </div>
               </div>

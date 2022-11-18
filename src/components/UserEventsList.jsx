@@ -4,6 +4,7 @@ import {
   collection,
   getDocs,
   getFirestore,
+  onSnapshot,
 } from "firebase/firestore";
 import { app } from "../pages/fire";
 
@@ -12,13 +13,13 @@ const UserEventsList = () => {
   const [eventList, setEventList] = useState([]);
   useEffect(() => {
     const getEventsList = async () => {
-      const querySnapshot = await getDocs(collection(firestore, "events"));
-      
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        setEventList(doc.data());
-      });
+      onSnapshot(collection(firestore, "events"), (snapshot) => {
+        let list = [];
+        snapshot.docs.forEach((doc) => {
+          list.push({id: doc.id, ...doc.data()})
+        })
+        setEventList(list)
+      })
     };
     getEventsList();
   }, []);
@@ -33,7 +34,7 @@ console.log("eve", eventList)
           <h3 className="section-title">Popular products</h3>
         </header>
         <div className="row">
-          {categories.map((result) => {
+          {eventList.map((result) => {
             return (
               <div className="col-md-3">
                 <div href="#" className="card card-product-grid">
@@ -43,9 +44,9 @@ console.log("eve", eventList)
                   </a>
                   <figcaption className="info-wrap">
                     <a href="#" className="title">
-                      {result.title}
+                      {result.eventName}
                     </a>
-                    <div className="price mt-1">{result.title}</div>
+                    <div className="price mt-1">{result.description}</div>
                   </figcaption>
                 </div>
               </div>
