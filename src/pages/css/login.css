@@ -8,3 +8,6 @@
   background-size: cover;
   background-position: center center;
 }
+.container {
+  width: 1000px;
+}

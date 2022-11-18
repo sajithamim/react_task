@@ -1,7 +1,28 @@
-import React from "react";
-import { categories } from "../data"; 
+import React, { useState, useEffect } from "react";
+import { categories } from "../data";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+} from "firebase/firestore";
+import { app } from "../pages/fire";
 
-const Events = () => {
+const UserEventsList = () => {
+  const firestore = getFirestore(app);
+  const [eventList, setEventList] = useState([]);
+  useEffect(() => {
+    const getEventsList = async () => {
+      const querySnapshot = await getDocs(collection(firestore, "events"));
+      
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        setEventList(doc.data());
+      });
+    };
+    getEventsList();
+  }, []);
+console.log("eve", eventList)
   return (
     <section className="section-name padding-y-sm">
       <div className="container">
@@ -36,4 +57,4 @@ const Events = () => {
   );
 };
 
-export default Events;
+export default UserEventsList;

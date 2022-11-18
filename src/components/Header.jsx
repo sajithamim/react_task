@@ -1,6 +1,17 @@
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = () => {
+  const { state } = useLocation();
+  const navigate = useNavigate();
+
+  const navigateLogin = () => {
+    state && state.userId ? navigate("/add_events") : navigate("/login");
+  };
+
+  const handleLogout = () => {
+
+  }
   return (
     <header className="section-header">
       <section className="header-main border-bottom">
@@ -26,7 +37,9 @@ const Header = () => {
             <div className="col-lg-4 col-sm-6 col-12">
               <div className="widgets-wrap float-md-right">
                 <div className="widget-header  mr-3">
-                  <button className="createBtn">Create Event</button>
+                  <button onClick={navigateLogin} className="createBtn">
+                    Create Event
+                  </button>
                 </div>
                 <div className="widget-header icontext">
                   <a href="#" className="icon icon-sm rounded-circle border">
@@ -34,7 +47,12 @@ const Header = () => {
                   </a>
                   <div className="text">
                     <span className="text-muted">Welcome!</span>
-                   
+                    <div>
+                      <a href="/register"> Register</a>
+                    </div>
+                    <div>
+                      {state && state.userId ? (<a href="#" onClick={handleLogout}>Sign Out</a>) : ""} 
+                    </div>
                   </div>
                 </div>
               </div>

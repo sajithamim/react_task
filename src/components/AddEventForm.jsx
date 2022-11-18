@@ -22,7 +22,7 @@ const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile,
                     type="text"
                     placeholder="Name Of Event"
                     name="eventname"
-                    value={values.eventname}
+                    value={values.eventname || ""}
                     onChange={handleInputChange}
                     autoFocus
                   />
@@ -30,9 +30,9 @@ const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile,
                   <Form.Control
                     className = "inputFields"
                     type="text"
-                    placeholder="Name Of Event"
+                    placeholder="Name Of Place"
                     name="place"
-                    value={values.place}
+                    value={values.place || ""}
                     onChange={handleInputChange}
                   />
                   <Form.Label>Description</Form.Label>
@@ -41,7 +41,7 @@ const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile,
                     type="text"
                     placeholder="Name Of Event"
                     name="description"
-                    value={values.description}
+                    value={values.description || ""}
                     onChange={handleInputChange}
                   />
                   <Form.Label>Start Time</Form.Label>
@@ -50,7 +50,7 @@ const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile,
                     type="date"
                     placeholder="Name Of Event"
                     name="date"
-                    value={values.date}
+                    value={values.date || ""}
                     onChange={handleInputChange}
                   />
                    <Form.Label>Add banner</Form.Label>
@@ -59,7 +59,7 @@ const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile,
                     type="file"
                     placeholder="Name Of Event"
                     name="banner"
-                    value={values.banner}
+                    value={values.banner || ""}
                     onChange={(e) => setFile(e.target.files[0])}
                   />
                 </Form.Group>
