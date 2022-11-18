@@ -34,15 +34,18 @@ export default function useTable(headCells, list) {
                 </td>
                 <td scope="col">
                   <div>
-                    <BsPencil
-                      style={{}}
-                      className="actionBtn"
-                      onClick={() => handleShow(item.id)}
-                    />{" "}
-                  <AiTwotoneDelete
-                    style={{ fontSize: 20, marginTop: "3px" }}
-                    onClick={() => handleDelete(item.id)}
-                  />{" "}
+                    <button>
+                      <BsPencil
+                        style={{fontSize: 20, marginTop: "3px"}}
+                        onClick={() => handleShow(item.id)}
+                      />{" "}
+                    </button>
+                    <button>
+                      <AiTwotoneDelete
+                        style={{ fontSize: 20, marginTop: "3px" }}
+                        onClick={() => handleDelete(item.id)}
+                      />{" "}
+                    </button>
                   </div>
                 </td>
               </tr>

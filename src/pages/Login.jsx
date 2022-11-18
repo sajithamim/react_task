@@ -1,63 +1,56 @@
-import React, { useState } from "react";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import app from "./fire";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React from "react";
+import "./css/login.css"
 
 const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const auth = getAuth();
-  const navigate = useNavigate();
-
-  const onSignIn = () => {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        sessionStorage.setItem("accessToken", user.accessToken);
-        navigate("/eventlist");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  };
-
   return (
-    <div className="Auth-form-container">
-      <div className="Auth-form-content">
-        <h3 className="Auth-form-title">Log In</h3>
-        <div className="form-group mt-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control mt-1"
-            placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="form-group mt-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control mt-1"
-            placeholder="Enter password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="d-grid gap-2 mt-3">
-          <button onClick={onSignIn} className="btn btn-primary">
-            Submit
-          </button>
-        </div>
-         <div className="d-grid gap-2 mt-3">
-          <a href="/eventlist" className="link-primary">
-            Click here to Add Events without a Login
-          </a>
+    <div className="maincontainer">
+      <div class="container-fluid">
+        <div class="row no-gutter">
+          <div class="col-md-6 d-none d-md-flex bg-image"></div>
+
+          <div class="col-md-6 bg-light">
+            <div class="login d-flex align-items-center py-5">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-10 col-xl-7 mx-auto">
+                    <h3 class="display-4">Login</h3>
+                    <p class="text-muted mb-4">
+                      Login here to create Events
+                    </p>
+                    <form>
+                      <div class="form-group mb-3">
+                        <input
+                          id="inputEmail"
+                          type="email"
+                          placeholder="Email address"
+                          required=""
+                          autofocus=""
+                          class="form-control rounded-pill border-0 shadow-sm px-4"
+                        />
+                      </div>
+                      <div class="form-group mb-6">
+                        <input
+                          id="inputPassword"
+                          type="password"
+                          placeholder="Password"
+                          required=""
+                          class="form-control rounded-pill border-0 shadow-sm px-4 text-primary"
+                        />
+                      </div>
+                      
+                      <button
+                        type="submit"
+                        class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"
+                      >
+                        Sign in
+                      </button>
+                      
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
