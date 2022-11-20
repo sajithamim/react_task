@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from "react";
 import Header from "../components/Header";
 import Banner from "../components/Banner";
-import Events from "../components/Events";
+import Events from "./Events";
 import Footer from "../components/Footer";
 
 

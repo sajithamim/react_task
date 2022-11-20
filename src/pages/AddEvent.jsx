@@ -31,7 +31,7 @@ const AddEvent = () => {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadBytes(storageRef, file).then(
         () => {
-          alert("uploading");
+          // alert("uploading");
         },
         uploadTask.on(
           "state_changed",

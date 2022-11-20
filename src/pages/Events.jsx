@@ -22,6 +22,7 @@ const Events = () => {
     };
     getEventsList();
   }, []);
+  console.log("eventList", eventList)
   return (
     <section className="section-name padding-y-sm">
       <div className="container">
@@ -38,7 +39,7 @@ const Events = () => {
                 <div href="#" className="card card-product-grid">
                   <a href="#" className="img-wrap">
                     {" "}
-                    <img src={result.img} />{" "}
+                    <img src={result.url} />{" "}
                   </a>
                   <figcaption className="info-wrap">
                     <a href="#" className="title">

@@ -1,16 +1,20 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import {getAuth, signOut} from "firebase/auth";
 
 const Header = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const auth = getAuth();
 
   const navigateLogin = () => {
     state && state.userId ? navigate("/add_events") : navigate("/login");
   };
 
   const handleLogout = () => {
-
+    signOut(auth)
+      .then(navigate("/")) // undefined
+      .catch(error => alert(error));
   }
   return (
     <header className="section-header">

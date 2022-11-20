@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { categories } from "../data";
 import {
   collection,
   getDocs,
@@ -40,7 +39,7 @@ console.log("eve", eventList)
                 <div href="#" className="card card-product-grid">
                   <a href="#" className="img-wrap">
                     {" "}
-                    <img src={result.img} />{" "}
+                    <img src={result.url} />{" "}
                   </a>
                   <figcaption className="info-wrap">
                     <a href="#" className="title">
