@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./AddEventForm.css"
 
-const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile, progress}) => {
+const AddEventForm = ({values, handleInputChange, handleSubmit, formerrors, setFile, progress}) => {
 
   return (
     <section className="section-main bg padding-y">
@@ -18,7 +18,6 @@ const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile,
                   <Form.Label>Event Name</Form.Label>
                   <Form.Control
                     className = "inputFields"
-                    errors = {errors.name}
                     type="text"
                     placeholder="Name Of Event"
                     name="eventname"
@@ -26,6 +25,9 @@ const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile,
                     onChange={handleInputChange}
                     autoFocus
                   />
+                   {formerrors.eventname && (
+                    <p className="text-warning">{formerrors.eventname}</p>
+                  )}
                    <Form.Label>Place</Form.Label>
                   <Form.Control
                     className = "inputFields"
@@ -35,15 +37,21 @@ const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile,
                     value={values.place || ""}
                     onChange={handleInputChange}
                   />
+                  {formerrors.place && (
+                    <p className="text-warning">{formerrors.place}</p>
+                  )}
                   <Form.Label>Description</Form.Label>
                   <Form.Control
                     className = "inputFields"
                     type="text"
-                    placeholder="Name Of Event"
+                    placeholder="Description"
                     name="description"
                     value={values.description || ""}
                     onChange={handleInputChange}
                   />
+                  {formerrors.description && (
+                    <p className="text-warning">{formerrors.description}</p>
+                  )}
                   <Form.Label>Start Time</Form.Label>
                   <Form.Control
                     className = "inputFields"
@@ -53,15 +61,21 @@ const AddEventForm = ({values, handleInputChange, handleSubmit, errors, setFile,
                     value={values.date || ""}
                     onChange={handleInputChange}
                   />
+                  {formerrors.date && (
+                    <p className="text-warning">{formerrors.date}</p>
+                  )}
                    <Form.Label>Add banner</Form.Label>
                   <Form.Control
                     className = "inputFields"
                     type="file"
                     placeholder="Name Of Event"
-                    name="banner"
-                    value={values.banner || ""}
+                    name="url"
+                    value={values.url || ""}
                     onChange={(e) => setFile(e.target.files[0])}
                   />
+                  {formerrors.url && (
+                    <p className="text-warning">{formerrors.url}</p>
+                  )}
                 </Form.Group>
                 <Button className="addEventBtn" type="submit" onClick={handleSubmit} disabled={progress !== null && progress < 100 }>Submit</Button>
               </Form>

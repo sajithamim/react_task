@@ -22,7 +22,7 @@ const Events = () => {
     };
     getEventsList();
   }, []);
-  console.log("eventList", eventList)
+  
   return (
     <section className="section-name padding-y-sm">
       <div className="container">
