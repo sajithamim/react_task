@@ -5,16 +5,15 @@ import Events from "./Events";
 import Footer from "../components/Footer";
 
 
-const AllEvents = () => {
+const Home = () => {
    
   return (
-    <div classname="App">
+    <div className="App">
       <Header />
       <Banner />
       <Events />   
-      <Footer />
     </div>
   );
 };
 
-export default AllEvents;
+export default Home;

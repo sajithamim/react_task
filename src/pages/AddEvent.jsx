@@ -17,9 +17,14 @@ import {
   collection,
   getFirestore,
   addDoc,
-  onSnapshot,
+  orderBy,
+  getDocs,
+  query,
+  where,
   updateDoc,
+  deleteDoc,
   doc,
+  startAt,
 } from "firebase/firestore";
 import { app } from "./fire";
 import { useLocation } from "react-router-dom";
@@ -31,19 +36,46 @@ const AddEvent = () => {
   const [formerrors, setFormErrors] = useState({});
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
-  const [isSubmit, setIsSubmit] = useState(null);
   const [url, setUrl] = useState("");
   const [eventList, setEventList] = useState([]);
+  const [filteredResult, setFilteredResult] = useState([]);
+  const [searchEvents, setSearchEvents] = useState([]);
+
+  const handleSearch = (searchValue) => {
+    setSearchEvents(searchValue);
+  };
 
   useEffect(() => {
+    searchItem();
+  }, [searchEvents]);
+
+  const searchItem = () => {
+    const data = eventList.filter(
+      (item) =>
+        item &&
+        item.eventName &&
+        item.eventName.toLowerCase().includes(searchEvents)
+    );
+    setFilteredResult(data);
+  };
+  
+  useEffect(() => {
+    setEventList(filteredResult)
+  },[filteredResult])
+
+  //Fetching the events list of user using whwere condition
+  useEffect(() => {
     const getEventsList = async () => {
-      onSnapshot(collection(firestore, "events"), (snapshot) => {
-        let list = [];
-        snapshot.docs.forEach((doc) => {
-          list.push({ id: doc.id, ...doc.data() });
-        });
-        setEventList(list);
+      const q = query(
+        collection(firestore, "events"),
+        where("userId", "==", state && state.userId)
+      );
+      const querySnapshot = await getDocs(q);
+      let list = [];
+      querySnapshot.forEach((doc) => {
+        list.push({ id: doc.id, ...doc.data() });
       });
+      setEventList(list);
     };
     getEventsList();
   }, []);
@@ -54,7 +86,7 @@ const AddEvent = () => {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadBytes(storageRef, file).then(
         () => {
-          alert("uploading");
+          // alert("uploading");
         },
         uploadTask.on(
           "state_changed",
@@ -79,6 +111,17 @@ const AddEvent = () => {
   const { values, setValues, handleInputChange, resetForm } =
     useForm(initialValues);
 
+  const deleteEvents = (id) => {
+    const docRef = doc(firestore, "events", id);
+    deleteDoc(docRef)
+      .then(() => {
+        notify("Entire Document has been deleted successfully.");
+      })
+      .catch((error) => {
+        notify(error);
+      });
+  };
+
   const validate = () => {
     let errors = {};
     if (!values.eventname) {
@@ -93,9 +136,6 @@ const AddEvent = () => {
     if (!values.date) {
       errors.date = "Date is Required";
     }
-    // if (!values.url) {
-    //   errors.url = "Image is Required";
-    // }
     return errors;
   };
 
@@ -103,6 +143,7 @@ const AddEvent = () => {
     let editData = eventList.find((item) => item.id === id);
     setValues({
       ...values,
+      id: id,
       userId: editData.userId,
       eventname: editData.eventName,
       place: editData.place,
@@ -119,7 +160,7 @@ const AddEvent = () => {
     if (Object.keys(errors).length) return setFormErrors(errors);
 
     if (values && values.hasOwnProperty("userId")) {
-      const docRef = doc(firestore, "events", "yshzDF2cIThuRRhDBORn");
+      const docRef = doc(firestore, "events", values.id);
       const updatedData = {
         userId: values && values.userId,
         eventName: values && values.eventname,
@@ -138,7 +179,7 @@ const AddEvent = () => {
     } else {
       const tasksRef = collection(firestore, "events");
       addDoc(tasksRef, {
-        userId: new Date().getTime().toString(),
+        userId: state && state.userId,
         eventName: values.eventname,
         place: values.place,
         description: values.description,
@@ -162,7 +203,7 @@ const AddEvent = () => {
   return (
     <>
       <div className="App">
-        <Header />
+        <Header handleSearch={handleSearch} />
         <AddEventForm
           values={values}
           handleInputChange={handleInputChange}
@@ -171,7 +212,11 @@ const AddEvent = () => {
           setFile={setFile}
           progress={progress}
         />
-        <UserEventsList eventList={eventList} updateEvents={updateEvents} />
+        <UserEventsList
+          eventList={eventList}
+          updateEvents={updateEvents}
+          deleteEvents={deleteEvents}
+        />
       </div>
       <div>
         <ToastContainer />

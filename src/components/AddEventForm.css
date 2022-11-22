@@ -11,10 +11,9 @@
     position: absolute;
     width: 350px;
     left: 30%;
-    margin-top: 30px;
+    margin: 10px -90px;
     border: none;
-    background-color: rgb(231, 160, 219);
-   
+    background-color: rgb(231, 160, 219); 
 }
 .addEventBtn:hover{
     background-color: rgb(231, 160, 219); 
