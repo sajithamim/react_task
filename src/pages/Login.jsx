@@ -35,6 +35,7 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         sessionStorage.setItem("accessToken", user.accessToken);
+        sessionStorage.setItem("userId", user.uid);
         sessionStorage.setItem("username", userCredential &&
         userCredential._tokenResponse &&
         userCredential._tokenResponse.email);

@@ -4,7 +4,7 @@ import { BsPencil } from "react-icons/bs";
 import { AiTwotoneDelete } from "react-icons/ai";
 
 const UserEventsList = ({ eventList, updateEvents, deleteEvents }) => {
-  console.log("eventList", eventList)
+  
   return (
     <section className="section-name padding-y-sm">
       <div className="container">
@@ -12,7 +12,7 @@ const UserEventsList = ({ eventList, updateEvents, deleteEvents }) => {
           <a href="/" className="btn btn-outline-primary float-right">
            Home
           </a>
-          <h3 className="section-title">Popular products</h3>
+          <h3 className="section-title">Events</h3>
         </header>
         <div className="row">
           

@@ -30,6 +30,7 @@ import { app } from "./fire";
 import { useLocation } from "react-router-dom";
 
 const AddEvent = () => {
+  const userId = sessionStorage.getItem("userId");
   const { state } = useLocation();
   const firestore = getFirestore(app);
   const initialValues = {};
@@ -68,7 +69,7 @@ const AddEvent = () => {
     const getEventsList = async () => {
       const q = query(
         collection(firestore, "events"),
-        where("userId", "==", state && state.userId)
+        where("userId", "==", userId)
       );
       const querySnapshot = await getDocs(q);
       let list = [];
@@ -78,7 +79,7 @@ const AddEvent = () => {
       setEventList(list);
     };
     getEventsList();
-  }, []);
+  }, [eventList]);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -115,7 +116,7 @@ const AddEvent = () => {
     const docRef = doc(firestore, "events", id);
     deleteDoc(docRef)
       .then(() => {
-        notify("Entire Document has been deleted successfully.");
+        notify("Event has been deleted successfully.");
       })
       .catch((error) => {
         notify(error);
