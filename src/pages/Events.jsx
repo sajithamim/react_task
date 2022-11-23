@@ -1,35 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  onSnapshot,
-  limit,
-  query,
-orderBy,
-startAt,
-} from "firebase/firestore";
-import { app } from "../pages/fire";
 
-const Events = () => {
-  const firestore = getFirestore(app);
-  const [eventList, setEventList] = useState([]);
 
-  //Fetching the whole events list
-  useEffect(() => {
-    const getEventsList = async () => {
-      onSnapshot(collection(firestore, "events"), (snapshot) => {
-        let list = [];
-        var lastVisible = snapshot.docs[snapshot.docs.length-1];
-        snapshot.docs.forEach((doc) => {
-          list.push({id: doc.id, ...doc.data()})
-        })
-        setEventList(list)
-      })
-    };
-    getEventsList();
-  }, []);
-
+const Events = ({eventList}) => { 
+console.log("eventList", eventList)
   return (
     <section className="section-name padding-y-sm">
       <div className="container">
@@ -52,7 +25,7 @@ const Events = () => {
                     <p className="title">
                       {result.eventName}
                     </p>
-                    <div className="price mt-1">{result.description}</div>
+                    <div className="price mt-1">{result.date}</div>
                   </figcaption>
                 </div>
               </div>

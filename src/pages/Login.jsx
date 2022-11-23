@@ -40,7 +40,7 @@ const Login = () => {
         userCredential._tokenResponse &&
         userCredential._tokenResponse.email);
         setTimeout(() => {
-          navigate("/add_events", {
+          navigate("/user_event", {
             state: {
               userId: user.uid,
               email:

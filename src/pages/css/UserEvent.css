@@ -1,0 +1,23 @@
+.header{
+   display : flex;
+}
+.createEventBtn{
+    margin-left: 1090px;
+}
+.imgBox{
+    width: 325px;
+}
+.pagBtndiv{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.pageBtnPre{
+   width: 125px;
+   padding: 10px;
+}
+.pageBtnNext{
+    width: 125px;
+    padding: 10px;
+    margin-left: 20px;
+}
