@@ -51,7 +51,7 @@ const UserEventsList = ({ eventList, updateEvents, deleteEvents }) => {
                 </div>
               </div>
             );
-          })) : (<div><p>No Data Found</p></div>)}
+          })) : (<div className="d-flex justify-content-left"><p>No Data Found</p></div>)}
         </div>
       </div>
     </section>

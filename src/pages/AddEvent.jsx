@@ -96,6 +96,7 @@ const AddEvent = () => {
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
             setProgress(prog);
+            setFile('');
           },
           (err) => console.log(err),
           () => {
@@ -173,6 +174,7 @@ const AddEvent = () => {
         .then((docRef) => {
           let message = "Event Edited Successfully";
           notify(message);
+          resetForm();
         })
         .catch((error) => {
           notify(error);
@@ -190,6 +192,7 @@ const AddEvent = () => {
         .then(() => {
           let message = "Event Added Successfully";
           notify(message);
+          resetForm();
         })
         .catch((err) => {
           notify(err.message);

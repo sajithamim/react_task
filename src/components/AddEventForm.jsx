@@ -82,14 +82,15 @@ const AddEventForm = ({
                           <p className="text-warning">{formerrors.date}</p>
                         )}
                         <Form.Label>Add banner</Form.Label>
-                        <Form.Control
-                          className="inputFields"
-                          type="file"
+                        <input
+                          class="form-control"
                           placeholder="Name Of Event"
-                          name="url"
-                          value={values.url || ""}
+                          type="file"
+                          name="file"
+                          // value={values.file || ""}
                           onChange={(e) => setFile(e.target.files[0])}
-                        />
+                          id="formFile"
+                        ></input>
                         {formerrors.url && (
                           <p className="text-warning">{formerrors.url}</p>
                         )}
