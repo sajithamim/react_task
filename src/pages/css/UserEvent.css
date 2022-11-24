@@ -9,15 +9,17 @@
 }
 .pagBtndiv{
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 .pageBtnPre{
    width: 125px;
    padding: 10px;
 }
 .pageBtnNext{
-    width: 125px;
+    width: 50px;
     padding: 10px;
+    height: 40px;
     margin-left: 20px;
+    border-radius: 20%;
 }

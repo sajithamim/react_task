@@ -1,10 +1,9 @@
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 
 const Header = ({ handleSearch }) => {
   const username = sessionStorage.getItem("username");
-  // const { state } = useLocation();
   const navigate = useNavigate();
   const auth = getAuth();
 

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { app } from "./fire";
 import { BsPencil } from "react-icons/bs";
 import { AiTwotoneDelete } from "react-icons/ai";
+import { FcPrevious } from "react-icons/fc";
+import { FcNext } from "react-icons/fc";
 import "./css/UserEvent.css";
 import { useForm } from "../common/useForm";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,6 +22,7 @@ import {
   startAfter,
   limit,
   endBefore,
+  limitToLast,
 } from "firebase/firestore";
 import Header from "../components/Header";
 import EventModal from "../components/EventModal";
@@ -44,9 +47,16 @@ const UserEventsList = () => {
   const [eventList, setEventList] = useState([]);
   const [open, setOpen] = useState(false);
   const [formerrors, setFormErrors] = useState({});
+  // const [searchEvents, setSearchEvents] = useState(null);
+  // const [filteredResult, setFilteredResult] = useState([]);
 
   const { values, setValues, handleInputChange, resetForm } =
     useForm(initialValues);
+
+  const options = [
+    { id: "1", name: "Business Events" },
+    { id: "2", name: "Sports Events" },
+  ];
 
   useEffect(() => {
     const uploadFile = () => {
@@ -54,7 +64,7 @@ const UserEventsList = () => {
       const uploadTask = uploadBytesResumable(storageRef, file);
       uploadBytes(storageRef, file).then(
         () => {
-          alert("uploading");
+          // alert("uploading");
         },
         uploadTask.on(
           "state_changed",
@@ -79,6 +89,32 @@ const UserEventsList = () => {
   const handleSetFile = (e) => {
     setFile(e.target.files[0]);
   };
+
+  const handleSearch = async (searchValue) => {
+    const first = query(
+      collection(firestore, "events"),
+      where("userId", "==", userId),
+      limit(4)
+    );
+    const querySnapshot = await getDocs(first);
+
+    const last = querySnapshot.docs[querySnapshot.docs.length - 1];
+    setLastvisible(last);
+
+    let list = [];
+    querySnapshot.forEach((doc) => {
+      list.push({ id: doc.id, ...doc.data() });
+    });
+
+    const data = list.filter(
+      (item) =>
+        item &&
+        item.eventName &&
+        item.eventName.toLowerCase().includes(searchValue)
+    );
+    setEventList(data);
+  };
+
   useEffect(() => {
     const getEventsList = async () => {
       const first = query(
@@ -107,12 +143,16 @@ const UserEventsList = () => {
       where("userId", "==", userId),
       orderBy("eventName"),
       startAfter(lastVisible),
-      limit(2)
+      limit(4)
     );
     const querySnapshot = await getDocs(next);
     const last = querySnapshot.docs[querySnapshot.docs.length - 1];
     setLastvisible(last);
-    const list = querySnapshot.docs.map((list) => list.data());
+
+    let list = [];
+    querySnapshot.forEach((doc) => {
+      list.push({ id: doc.id, ...doc.data() });
+    });
     setEventList(list);
   };
 
@@ -120,13 +160,19 @@ const UserEventsList = () => {
     const next = query(
       collection(firestore, "events"),
       where("userId", "==", userId),
+      orderBy("eventName"),
       endBefore(lastVisible),
-      limit(2)
+      limitToLast(1),
+      limit(4)
     );
     const querySnapshot = await getDocs(next);
     const last = querySnapshot.docs[querySnapshot.docs.length - 1];
     setLastvisible(last);
-    const list = querySnapshot.docs.map((list) => list.data());
+
+    let list = [];
+    querySnapshot.forEach((doc) => {
+      list.push({ id: doc.id, ...doc.data() });
+    });
     setEventList(list);
   };
 
@@ -141,7 +187,8 @@ const UserEventsList = () => {
       place: editData.place,
       description: editData.description,
       date: editData.date,
-      // url: editData.url,
+      url: editData.url,
+      category: editData.category,
     });
   };
 
@@ -157,8 +204,6 @@ const UserEventsList = () => {
       });
   };
 
- 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     let errors = validate();
@@ -172,6 +217,8 @@ const UserEventsList = () => {
         place: values && values.place,
         description: values && values.description,
         date: values && values.date,
+        url: values && values.url,
+        category: values && values.category,
       };
       updateDoc(docRef, updatedData)
         .then((docRef) => {
@@ -192,6 +239,7 @@ const UserEventsList = () => {
         place: values.place,
         description: values.description,
         date: values.date,
+        category: values.category,
         url: url,
       })
         .then(() => {
@@ -231,9 +279,10 @@ const UserEventsList = () => {
   const handleOpen = () => {
     setOpen(!open);
   };
+
   return (
     <>
-      <Header />
+      <Header handleSearch={handleSearch} />
       <section className="section-name padding-y-sm">
         <div className="container">
           <header className="section-heading header">
@@ -275,7 +324,11 @@ const UserEventsList = () => {
                           <div className="col-md-6">{result.date}</div>
                           <div className="col-md-6 text-right">
                             <AiTwotoneDelete
-                              style={{ fontSize: 20, marginTop: "3px" }}
+                              style={{
+                                fontSize: 20,
+                                marginTop: "3px",
+                                cursor: "pointer",
+                              }}
                               onClick={() => deleteEvents(result.id)}
                             />{" "}
                           </div>
@@ -286,27 +339,21 @@ const UserEventsList = () => {
                 );
               })
             ) : (
-              <div className="d-flex justify-content-left">
-                <p>No Data Found</p>
+              <div className="d-flex justify-content-center w-100 h-100 p-3">
+                <p>Loading....</p>
               </div>
             )}
 
-            <div className="pagBtndiv">
-              <button
-                type="button"
-                className="btn btn-primary pageBtnPre"
+            {eventList && eventList.length > 0 ? (
+              <div className="pagBtndiv">
+              <FcPrevious
+                className="btn btn-light pageBtnNext"
                 onClick={() => handlePrevious()}
-              >
-                Previous
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary pageBtnNext"
-                onClick={() => handleNext()}
-              >
-                Next
-              </button>
+              />
+              <FcNext  className=" btn btn-light pageBtnNext"
+                onClick={() => handleNext()}/>
             </div>
+            ) : ""}
           </div>
           <EventModal
             open={open}
@@ -317,6 +364,7 @@ const UserEventsList = () => {
             handleSubmit={handleSubmit}
             handleSetFile={handleSetFile}
             progress={progress}
+            options={options}
           />
         </div>
         <div>

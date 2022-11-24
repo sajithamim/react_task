@@ -17,6 +17,7 @@ const EventModal = ({
   handleSetFile,
   handleSubmit,
   progress,
+  options,
 }) => {
   return (
     <Modal show={open}>
@@ -84,6 +85,18 @@ const EventModal = ({
             id="formFile"
           ></input>
           {formerrors.url && <p className="text-warning">{formerrors.url}</p>}
+          <Form.Label>Select Category</Form.Label>
+            <Form.Select
+              size="sm"
+              name="category"
+              value={values.category}
+              onChange={handleInputChange}
+            >
+              <option>Choose a category</option>
+              {options.map((item) => (
+                <option key={item.name} value={item.id}>{item.name}</option>
+              ))}
+            </Form.Select>
         </Form.Group>
       </ModalBody>
 
@@ -91,7 +104,7 @@ const EventModal = ({
         {" "}
         <button
           type="button"
-          class="btn btn-primary"
+          className="btn btn-primary"
           onClick={handleSubmit}
           disabled={progress !== null && progress < 100}
         >
