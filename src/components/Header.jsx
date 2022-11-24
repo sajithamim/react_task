@@ -102,7 +102,7 @@ const Header = ({ handleSearch }) => {
               </div>
             </div>
           </div>
-        </div>s
+        </div>
       </section>
     </header>
   );

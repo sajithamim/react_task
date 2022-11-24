@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 
 const Events = ({eventList}) => { 
-console.log("eventList", eventList)
+
   return (
     <section className="section-name padding-y-sm">
       <div className="container">

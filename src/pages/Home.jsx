@@ -13,9 +13,23 @@ import { app } from "../pages/fire";
 const Home = () => {
   const firestore = getFirestore(app);
   const [eventList, setEventList] = useState([]);
-  const [searchEvents, setSearchEvents] = useState([]);
+  const [searchEvents, setSearchEvents] = useState(null);
   const [filteredResult, setFilteredResult] = useState([]);
 
+  const handleSearch = (searchValue) => {
+    setSearchEvents(searchValue);
+  };
+
+  useEffect(() => {
+    const data = eventList.filter(
+      (item) =>
+        item &&
+        item.eventName &&
+        item.eventName.toLowerCase().includes(searchEvents)
+    );
+    setFilteredResult(data);
+  }, [searchEvents]);
+ 
   //Fetching the whole events list
   useEffect(() => {
     const getEventsList = async () => {
@@ -31,29 +45,12 @@ const Home = () => {
     getEventsList();
   }, []);
 
-  const handleSearch = (searchValue) => {
-    setSearchEvents(searchValue);
-  };
 
-  useEffect(() => {
-    searchItem();
-  }, [searchEvents]);
-
-  const searchItem = () => {
-    const data = eventList.filter(
-      (item) =>
-        item &&
-        item.eventName &&
-        item.eventName.toLowerCase().includes(searchEvents)
-    );
-    setFilteredResult(data);
-  };
-  
   return (
     <div className="App">
       <Header handleSearch={handleSearch} />
       <Banner />
-      <Events eventList={filteredResult ? filteredResult : eventList} />
+      <Events eventList={eventList} filteredResult={filteredResult}/>
     </div>
   );
 };

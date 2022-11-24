@@ -85,7 +85,7 @@ const UserEventsList = () => {
         collection(firestore, "events"),
         where("userId", "==", userId),
         orderBy("eventName"),
-        limit(2)
+        limit(4)
       );
       const querySnapshot = await getDocs(first);
 
@@ -100,6 +100,35 @@ const UserEventsList = () => {
     };
     getEventsList();
   }, [isSubmit]);
+
+  const handleNext = async () => {
+    const next = query(
+      collection(firestore, "events"),
+      where("userId", "==", userId),
+      orderBy("eventName"),
+      startAfter(lastVisible),
+      limit(2)
+    );
+    const querySnapshot = await getDocs(next);
+    const last = querySnapshot.docs[querySnapshot.docs.length - 1];
+    setLastvisible(last);
+    const list = querySnapshot.docs.map((list) => list.data());
+    setEventList(list);
+  };
+
+  const handlePrevious = async () => {
+    const next = query(
+      collection(firestore, "events"),
+      where("userId", "==", userId),
+      endBefore(lastVisible),
+      limit(2)
+    );
+    const querySnapshot = await getDocs(next);
+    const last = querySnapshot.docs[querySnapshot.docs.length - 1];
+    setLastvisible(last);
+    const list = querySnapshot.docs.map((list) => list.data());
+    setEventList(list);
+  };
 
   const updateEvents = (id) => {
     handleOpen();
@@ -128,34 +157,7 @@ const UserEventsList = () => {
       });
   };
 
-  const handleNext = async () => {
-    const next = query(
-      collection(firestore, "events"),
-      where("userId", "==", userId),
-      orderBy("eventName"),
-      startAfter(lastVisible),
-      limit(3)
-    );
-    const querySnapshot = await getDocs(next);
-    const last = querySnapshot.docs[querySnapshot.docs.length - 1];
-    setLastvisible(last);
-    const list = querySnapshot.docs.map((list) => list.data());
-    setEventList(list);
-  };
-
-  const handlePrevious = async () => {
-    const next = query(
-      collection(firestore, "events"),
-      where("userId", "==", userId),
-      endBefore(lastVisible),
-      limit(2)
-    );
-    const querySnapshot = await getDocs(next);
-    const last = querySnapshot.docs[querySnapshot.docs.length - 1];
-    setLastvisible(last);
-    const list = querySnapshot.docs.map((list) => list.data());
-    setEventList(list);
-  };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -293,14 +295,14 @@ const UserEventsList = () => {
               <button
                 type="button"
                 className="btn btn-primary pageBtnPre"
-                onClick={() => handleNext()}
+                onClick={() => handlePrevious()}
               >
                 Previous
               </button>
               <button
                 type="button"
                 className="btn btn-primary pageBtnNext"
-                onClick={() => handlePrevious()}
+                onClick={() => handleNext()}
               >
                 Next
               </button>
