@@ -35,7 +35,7 @@ const Header = ({ handleSearch }) => {
         <div className="row ">
           <div className="col-lg-6 col-sm-12">
             <form action="#" className="search">
-              <div className="input-group w-50" style={{ margin: "0px 302px" }}>
+              <div className="input-group w-50" style={{ margin: "0px 275px" }}>
                 <input
                   type="text"
                   className="form-control"
@@ -51,7 +51,7 @@ const Header = ({ handleSearch }) => {
             </form>
           </div>
           <div className="col-lg-4 col-sm-6 col-12">
-            <div className="widgets-wrap float-md-left">
+            <div className="widgets-wrap float-md-right">
               <div className="widget-header  mr-3">
                 <button onClick={navigateHome} className="createBtn">
                   Home
