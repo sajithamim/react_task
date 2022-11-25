@@ -30,8 +30,8 @@ const Register = () => {
       }
     }
     setTimeout(() => {
-      setFormErrors('')
-     }, [1500])
+      setFormErrors("");
+    }, [1500]);
     return errors;
   };
 
@@ -52,8 +52,11 @@ const Register = () => {
           navigate("/login");
         }, [1500]);
       })
-      .catch((err) => notify(err.message));
-    // }
+      .catch((err) => {
+        let errStructure = err && err.message.replace("Firebase: Error (auth/", "");
+        let errMessage = errStructure.replace(")", "");
+        notify(errMessage);
+      });
   };
 
   const notify = (message) => {
@@ -144,6 +147,9 @@ const Register = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <ToastContainer />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
-import Banner from "../components/Banner";
-import Events from "./Events";
+import Header from "../../components/Header";
+import Banner from "../../components/Banner";
+import Events from "../Events";
 import {
   collection,
   getFirestore,
@@ -19,7 +19,7 @@ import {
   endBefore,
   limitToLast,
 } from "firebase/firestore";
-import { app } from "../pages/fire";
+import { app } from "../fire";
 
 const Home = () => {
   const firestore = getFirestore(app);
