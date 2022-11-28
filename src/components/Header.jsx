@@ -57,15 +57,6 @@ const Header = ({ handleSearch }) => {
                   Home
                 </button>
               </div>
-              {username === null  ? "" : (
-                (
-                  <div className="widget-header  mr-3">
-                    <button onClick={navigateEventsForYou} className="createBtn">
-                      Events For You
-                    </button>
-                  </div>
-                )
-              )}
               {!username ? (
                 <div className="widget-header  mr-3">
                   <button onClick={navigateLogin} className="createBtn">

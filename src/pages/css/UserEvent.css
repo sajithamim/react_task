@@ -1,8 +1,20 @@
 .header{
    display : flex;
 }
+.my-events{
+    /* align-items: flex-end;
+    justify-content: flex-end; */
+    width: 50px;
+}
+.event-header-main{
+    display: flex;
+    justify-content: space-between;
+}
+.event-heading{
+    width:  200px;
+}
 .createEventBtn{
-    margin-left: 1090px;
+    background-color: #fff;
 }
 .imgBox{
     width: 325px;

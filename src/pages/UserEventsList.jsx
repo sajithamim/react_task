@@ -285,15 +285,16 @@ const UserEventsList = () => {
       <Header handleSearch={handleSearch} />
       <section className="section-name padding-y-sm">
         <div className="container">
-          <header className="section-heading header">
-            <h3 className="section-title">Events</h3>
+          <div className="event-header-main">
+            <h5 className="event-heading">My Events</h5>
             <button
               className="btn btn-outline-primary createEventBtn"
               onClick={handleOpen}
             >
               Create Events
             </button>
-          </header>
+          </div>
+
           <div className="row">
             {eventList && eventList.length > 0 ? (
               eventList.map((result) => {
@@ -346,14 +347,18 @@ const UserEventsList = () => {
 
             {eventList && eventList.length > 0 ? (
               <div className="pagBtndiv">
-              <FcPrevious
-                className="btn btn-light pageBtnNext"
-                onClick={() => handlePrevious()}
-              />
-              <FcNext  className=" btn btn-light pageBtnNext"
-                onClick={() => handleNext()}/>
-            </div>
-            ) : ""}
+                <FcPrevious
+                  className="btn btn-light pageBtnNext"
+                  onClick={() => handlePrevious()}
+                />
+                <FcNext
+                  className=" btn btn-light pageBtnNext"
+                  onClick={() => handleNext()}
+                />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <EventModal
             open={open}

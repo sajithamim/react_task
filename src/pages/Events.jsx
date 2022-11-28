@@ -13,7 +13,7 @@ const Events = ({ eventList, handleNext, handlePrevious }) => {
             <h3 className="section-title">Events</h3>
           </header>
           <div className="row">
-            {eventList.map((item) => {
+            {eventList && eventList.map((item) => {
               return <EventList result={item} />;
             })}
           </div>
