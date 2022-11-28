@@ -21,10 +21,8 @@ const Home = () => {
   const [lastVisible, setLastvisible] = useState([]);
 
   //Search Function
-  const handleSearch = async(searchValue) => {
-    const first = query(
-      collection(firestore, "events"),
-    );
+  const handleSearch = async (searchValue) => {
+    const first = query(collection(firestore, "events"));
     const querySnapshot = await getDocs(first);
 
     const last = querySnapshot.docs[querySnapshot.docs.length - 1];
@@ -34,7 +32,13 @@ const Home = () => {
     querySnapshot.forEach((doc) => {
       list.push({ id: doc.id, ...doc.data() });
     });
-    const data = list.filter(
+
+    const data = typeof(searchValue) === 'object' ? list.filter(
+        (item) =>
+          item &&
+          item.category &&
+          item.category.includes(searchValue.target.value)
+      ) : list.filter(
       (item) =>
         item &&
         item.eventName &&
@@ -42,7 +46,6 @@ const Home = () => {
     );
     setEventList(data);
   };
-
 
   //Fetching the whole events list
   useEffect(() => {
@@ -103,7 +106,7 @@ const Home = () => {
 
   return (
     <div className="App">
-      <Header handleSearch={handleSearch} />
+      <Header handleSearch={handleSearch}  />
       <Banner />
       <Events
         eventList={eventList}

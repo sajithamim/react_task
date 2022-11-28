@@ -24,7 +24,6 @@ const DeleteModal = ({show, deleteId, deleteEvents,  handleDeleteModal, }) => {
           type="button"
           className="btn btn-primary"
           onClick={() => deleteEvents(deleteId)}
-        //   disabled={progress !== null && progress < 100}
         >
           Yes
         </button>

@@ -1,7 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ModalBody from "react-bootstrap/ModalBody";
 import ModalHeader from "react-bootstrap/ModalHeader";

@@ -1,0 +1,14 @@
+.header-box{
+    position: relative;
+    margin: 0px 275px;
+}
+.category-select-div{
+    position: absolute;
+    left: 500px;
+}
+.category-select{
+    width: 197px;
+    height: 37px;
+    border-radius: 6px;
+    background-color: #fff;
+}

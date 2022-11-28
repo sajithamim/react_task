@@ -1,18 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
+import "./Header.css";
 
-const Header = ({ handleSearch }) => {
+const Header = ({ handleSearch , handleSelect}) => {
   const username = sessionStorage.getItem("username");
   const navigate = useNavigate();
   const auth = getAuth();
 
+  const options = [
+    { id: "1", name: "Business Events" },
+    { id: "2", name: "Sports Events" },
+  ];
+
   const navigateLogin = () => {
     username ? navigate("/add_events") : navigate("/login");
-  };
-
-  const navigateEventsForYou = () => {
-    navigate("/user_event");
   };
 
   const navigateHome = () => {
@@ -35,7 +37,7 @@ const Header = ({ handleSearch }) => {
         <div className="row ">
           <div className="col-lg-6 col-sm-12">
             <form action="#" className="search">
-              <div className="input-group w-50" style={{ margin: "0px 275px" }}>
+              <div className="input-group w-50 header-box">
                 <input
                   type="text"
                   className="form-control"
@@ -46,6 +48,15 @@ const Header = ({ handleSearch }) => {
                   <button className="btn btn-primary" type="submit">
                     <i className="fa fa-search" />
                   </button>
+                </div>
+
+                <div className="category-select-div">
+                <select name="category" id="category" onClick={handleSearch} className="category-select">
+                  <option></option>
+                  {options && options.map((item) => (
+                    <option value={item.id}>{item.name}</option>
+                  ))}
+                </select>
                 </div>
               </div>
             </form>

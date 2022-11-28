@@ -50,6 +50,7 @@ const UserEventsList = () => {
   const [show, setShow] = useState(false);
   const [deleteId, setDeleteId] = useState();
   const [formerrors, setFormErrors] = useState({});
+  const [noData, setNoData] = useState(false);
 
   const { values, setValues, handleInputChange, resetForm } =
     useForm(initialValues);
@@ -107,12 +108,21 @@ const UserEventsList = () => {
       list.push({ id: doc.id, ...doc.data() });
     });
 
-    const data = list.filter(
-      (item) =>
-        item &&
-        item.eventName &&
-        item.eventName.toLowerCase().includes(searchValue)
-    );
+    const data =
+      typeof searchValue === "object"
+        ? list.filter(
+            (item) =>
+              item &&
+              item.category &&
+              item.category.includes(searchValue.target.value)
+          )
+        : list.filter(
+            (item) =>
+              item &&
+              item.eventName &&
+              item.eventName.toLowerCase().includes(searchValue)
+          );
+          
     setEventList(data);
   };
 
@@ -194,7 +204,7 @@ const UserEventsList = () => {
   };
 
   const deleteEvents = (id) => {
-    handleDeleteModal()
+    handleDeleteModal();
     const docRef = doc(firestore, "events", id);
     deleteDoc(docRef)
       .then(() => {
@@ -281,10 +291,10 @@ const UserEventsList = () => {
   const handleOpen = () => {
     setOpen(!open);
   };
- 
+
   const handleDeleteModal = (id) => {
     setShow(!show);
-    setDeleteId(id)
+    setDeleteId(id);
   };
 
   return (

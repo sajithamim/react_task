@@ -2,8 +2,6 @@
    display : flex;
 }
 .my-events{
-    /* align-items: flex-end;
-    justify-content: flex-end; */
     width: 50px;
 }
 .event-header-main{
