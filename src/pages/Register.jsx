@@ -12,8 +12,7 @@ const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formerrors, setFormErrors] = useState({});
-  const { values, setValues, handleInputChange, resetForm } =
-    useForm(initialValues);
+  const { values, handleInputChange } = useForm(initialValues);
 
   const validatePassword = () => {
     let isValid = true;
@@ -40,7 +39,6 @@ const Register = () => {
     setError("");
     const auth = getAuth();
     const { email, password } = values;
-    // if (validatePassword()) {
     let errors = validatePassword();
     if (Object.keys(errors).length) return setFormErrors(errors);
     // Create a new user with email and password using firebase
@@ -53,8 +51,13 @@ const Register = () => {
         }, [1500]);
       })
       .catch((err) => {
-        let errStructure = err && err.message.replace("Firebase: Error (auth/", "");
-        let errMessage = errStructure.replace(")", "");
+        let errMessage =
+          err &&
+          err.message
+            .replace("Firebase: Error (auth/", "")
+            .replace("Firebase:", "")
+            .replace(")", "")
+            .replace("(", "");
         notify(errMessage);
       });
   };

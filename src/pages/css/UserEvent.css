@@ -9,6 +9,7 @@
 .event-header-main{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
 .event-heading{
     width:  200px;

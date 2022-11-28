@@ -34,6 +34,7 @@ import {
 } from "firebase/storage";
 import { storage } from "./fire";
 import { v4 } from "uuid";
+import DeleteModal from "../components/DeleteModal";
 
 const UserEventsList = () => {
   const initialValues = {};
@@ -46,9 +47,9 @@ const UserEventsList = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [eventList, setEventList] = useState([]);
   const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(false);
+  const [deleteId, setDeleteId] = useState();
   const [formerrors, setFormErrors] = useState({});
-  // const [searchEvents, setSearchEvents] = useState(null);
-  // const [filteredResult, setFilteredResult] = useState([]);
 
   const { values, setValues, handleInputChange, resetForm } =
     useForm(initialValues);
@@ -193,6 +194,7 @@ const UserEventsList = () => {
   };
 
   const deleteEvents = (id) => {
+    handleDeleteModal()
     const docRef = doc(firestore, "events", id);
     deleteDoc(docRef)
       .then(() => {
@@ -279,6 +281,11 @@ const UserEventsList = () => {
   const handleOpen = () => {
     setOpen(!open);
   };
+ 
+  const handleDeleteModal = (id) => {
+    setShow(!show);
+    setDeleteId(id)
+  };
 
   return (
     <>
@@ -330,7 +337,8 @@ const UserEventsList = () => {
                                 marginTop: "3px",
                                 cursor: "pointer",
                               }}
-                              onClick={() => deleteEvents(result.id)}
+                              // onClick={() => deleteEvents(result.id)}
+                              onClick={() => handleDeleteModal(result.id)}
                             />{" "}
                           </div>
                         </div>
@@ -370,6 +378,12 @@ const UserEventsList = () => {
             handleSetFile={handleSetFile}
             progress={progress}
             options={options}
+          />
+          <DeleteModal
+            show={show}
+            deleteId={deleteId}
+            deleteEvents={deleteEvents}
+            handleDeleteModal={handleDeleteModal}
           />
         </div>
         <div>
